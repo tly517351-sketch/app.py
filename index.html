@@ -50,20 +50,6 @@
         animation: glow 2s infinite alternate;
     }
 
-    .subtitle{
-        font-size:1.3em;
-        color:#fff;
-        text-shadow: 0 2px 8px rgba(255, 77, 109, 0.4);
-        margin:10px 0 20px 0;
-        font-weight:bold;
-        animation: pulse-text 2s infinite;
-    }
-
-    @keyframes pulse-text{
-        0%, 100%{opacity:0.9;}
-        50%{opacity:1;}
-    }
-
     p{
         color:#fff;
         font-size:1.2em;
@@ -92,6 +78,21 @@
     @keyframes glow{
         from{filter:drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));}
         to{filter:drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));}
+    }
+
+    .subtitle{
+        display:none;
+        font-size:1.4em;
+        color:#fff;
+        text-shadow: 0 3px 10px rgba(255, 77, 109, 0.5);
+        margin:20px 0;
+        font-weight:bold;
+        animation: slideIn 1s ease forwards;
+    }
+
+    @keyframes slideIn{
+        from{opacity:0; transform:translateY(-20px);}
+        to{opacity:1; transform:translateY(0);}
     }
 
     .message{
@@ -159,9 +160,12 @@
     </div>
     
     <h1>اضغطي على القلب يا أحن أم ❤️</h1>
-    <div class="subtitle">54 سنة من العطاء والحنان</div>
     
     <div class="heart-btn" onclick="showMessage()">❤️</div>
+
+    <div class="subtitle" id="subtitle">
+        54 سنة من العطاء والحنان 💕
+    </div>
     
     <div class="message" id="msg">
         امي الغاليه ❤️<br><br>
@@ -194,14 +198,34 @@ const heartTypes = [
     </svg>`,
 ];
 
+let isAnimating = false;
+
 function showMessage(){
-    document.getElementById('msg').style.display='block';
+    if(isAnimating) return;
+    
+    isAnimating = true;
+    
+    // Show subtitle first
+    document.getElementById('subtitle').style.display = 'block';
+    
+    // Show message after 1 second
+    setTimeout(() => {
+        document.getElementById('msg').style.display = 'block';
+    }, 1000);
+    
+    // Play music
     document.getElementById('music').play();
-    for(let i=0;i<50;i++) createHeart();
+    
+    // Create 100 hearts throughout the animation
+    for(let i = 0; i < 100; i++) {
+        setTimeout(() => {
+            createHeart();
+        }, i * 50); // Stagger heart creation
+    }
 }
 
 function createHeart(){
-    let h=document.createElement('div');
+    let h = document.createElement('div');
     h.classList.add('heart-svg');
     
     let heartType = heartTypes[Math.floor(Math.random() * heartTypes.length)];
