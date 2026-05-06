@@ -68,22 +68,41 @@ p{
     to{opacity:1; transform:translateY(0);}
 }
 
-.heart{
+.heart-svg{
     position:absolute;
-    color:#ff4d6d;
-    animation: float 6s linear infinite;
+    filter: drop-shadow(0 0 8px rgba(255, 77, 109, 0.6));
 }
 
-@keyframes float{
-    0%{transform:translateY(100vh) scale(0.5); opacity:1;}
-    100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
+@keyframes float1{
+    0%{transform:translateY(100vh) translateX(0) rotateZ(0deg) scale(0.8); opacity:1;}
+    100%{transform:translateY(-10vh) translateX(30px) rotateZ(180deg) scale(1); opacity:0;}
 }
 
-canvas{
-    position:absolute;
-    top:0;
-    left:0;
+@keyframes float2{
+    0%{transform:translateY(100vh) translateX(0) rotateZ(45deg) scale(0.7); opacity:1;}
+    100%{transform:translateY(-10vh) translateX(-50px) rotateZ(-90deg) scale(1.2); opacity:0;}
 }
+
+@keyframes float3{
+    0%{transform:translateY(100vh) translateX(0) rotateZ(-30deg) scale(0.9); opacity:1;}
+    100%{transform:translateY(-10vh) translateX(60px) rotateZ(270deg) scale(1.1); opacity:0;}
+}
+
+@keyframes float4{
+    0%{transform:translateY(100vh) translateX(0) rotateZ(90deg) scale(0.75); opacity:1;}
+    100%{transform:translateY(-10vh) translateX(-80px) rotateZ(45deg) scale(0.9); opacity:0;}
+}
+
+@keyframes float5{
+    0%{transform:translateY(100vh) translateX(0) rotateZ(-60deg) scale(0.85); opacity:1;}
+    100%{transform:translateY(-10vh) translateX(100px) rotateZ(180deg) scale(1.3); opacity:0;}
+}
+
+.float1{ animation: float1 6s linear infinite; }
+.float2{ animation: float2 6.5s linear infinite; }
+.float3{ animation: float3 7s linear infinite; }
+.float4{ animation: float4 7.5s linear infinite; }
+.float5{ animation: float5 8s linear infinite; }
 
 </style>
 </head>
@@ -101,6 +120,30 @@ canvas{
 </div><audio id="music" src="https://www.bensound.com/bensound-music/bensound-violin.mp3"></audio>
 
 <script>
+const colors = ['#ff1744', '#ff5252', '#ff6b6b', '#ff4d6d', '#e63946', '#d62828', '#a4161a', '#740001'];
+const heartTypes = [
+    // Classic heart
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,90 C30,75 10,60 10,40 C10,25 20,15 30,15 C40,15 50,25 50,25 C50,25 60,15 70,15 C80,15 90,25 90,40 C90,60 70,75 50,90 Z" fill="$COLOR" stroke="$COLOR" stroke-width="1"/>
+    </svg>`,
+    // Rounded heart
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,95 C25,78 5,62 5,38 C5,20 18,10 28,10 C38,10 48,20 50,28 C52,20 62,10 72,10 C82,10 95,20 95,38 C95,62 75,78 50,95 Z" fill="$COLOR" stroke="$COLOR" stroke-width="1"/>
+    </svg>`,
+    // Sharp heart
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,92 L10,45 C5,35 8,20 20,20 C30,20 40,28 50,38 C60,28 70,20 80,20 C92,20 95,35 90,45 Z" fill="$COLOR" stroke="$COLOR" stroke-width="1"/>
+    </svg>`,
+    // Wide heart
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,88 C28,72 8,58 8,35 C8,22 18,12 30,12 C40,12 48,18 50,25 C52,18 60,12 70,12 C82,12 92,22 92,35 C92,58 72,72 50,88 Z" fill="$COLOR" stroke="$COLOR" stroke-width="1"/>
+    </svg>`,
+    // Deep heart
+    `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50,95 C20,75 5,60 5,42 C5,25 16,15 28,15 C38,15 47,22 50,30 C53,22 62,15 72,15 C84,15 95,25 95,42 C95,60 80,75 50,95 Z" fill="$COLOR" stroke="$COLOR" stroke-width="1"/>
+    </svg>`,
+];
+
 function showMessage(){
     document.getElementById('msg').style.display='block';
     document.getElementById('music').play();
@@ -109,12 +152,24 @@ function showMessage(){
 
 function createHeart(){
     let h=document.createElement('div');
-    h.classList.add('heart');
-    h.innerHTML='❤️';
-    h.style.left=Math.random()*100+'vw';
-    h.style.fontSize=(Math.random()*20+10)+'px';
+    h.classList.add('heart-svg');
+    
+    // Random unique heart type
+    let heartType = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+    let color = colors[Math.floor(Math.random() * colors.length)];
+    let svgContent = heartType.replace('$COLOR', color);
+    
+    h.innerHTML = svgContent;
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.width = (Math.random() * 40 + 30) + 'px';
+    h.style.height = h.style.width;
+    
+    // Random animation class
+    let animClass = 'float' + (Math.floor(Math.random() * 5) + 1);
+    h.classList.add(animClass);
+    
     document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
+    setTimeout(()=>h.remove(), 8000);
 }
 </script></body>
 </html>
