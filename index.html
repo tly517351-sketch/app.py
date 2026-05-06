@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="ar">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>عيد ميلاد ماما ❤️</title>
+<style>
+    body{
+        margin:0;
+        height:100vh;
+        overflow:hidden;
+        font-family: 'Tahoma', sans-serif;
+        direction: rtl;
+        background: radial-gradient(circle at top,#2b0a3d,#000);
+        color:white;
+    }.container{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    text-align:center;
+    z-index:10;
+    width:90%;
+}
+
+h1{
+    font-size:2.5em;
+    background: linear-gradient(45deg,#ff4d6d,#ffd6ff,#fff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: glow 2s infinite alternate;
+}
+
+p{
+    color:#ffd6e0;
+    font-size:1.2em;
+}
+
+.heart-btn{
+    font-size:70px;
+    cursor:pointer;
+    animation: pulse 1.5s infinite;
+    display:inline-block;
+    margin-top:20px;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+@keyframes glow{
+    from{filter:drop-shadow(0 0 5px #ff4d6d);}
+    to{filter:drop-shadow(0 0 25px #fff);}
+}
+
+.message{
+    display:none;
+    font-size:1.1em;
+    line-height:2;
+    margin-top:20px;
+    color:#ffe6f0;
+    animation: fadeIn 2s ease forwards;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+.heart{
+    position:absolute;
+    color:#ff4d6d;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(100vh) scale(0.5); opacity:1;}
+    100%{transform:translateY(-10vh) scale(1.5); opacity:0;}
+}
+
+canvas{
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+</style>
+</head>
+<body><div class="container">
+    <h1>اضغطي على القلب يا أحن أم ❤️</h1>
+    <div class="heart-btn" onclick="showMessage()">❤️</div><div class="message" id="msg">
+    امي الغاليه ❤️<br><br>
+    كل عام وأنتِ بألف خير وصحة وسعادة دائمة يارب 🤍<br>
+    ربي يجعلها بداية عمر جديد مليان خير وبركه 🌸<br>
+    ويارب أيامج الجايه تكون كلها هدوء وسعاده وراحة بال 🌷<br>
+    أحبج هوااية يا أحلى إخلاص بالدنيا كلها ❤❤<br>
+    ربي يحفظج النا ويطوللنا عمرج ويخليج دائما سند وعزوة النا 🫂❤❤
+</div>
+
+</div><audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"></audio>
+
+<script>
+function showMessage(){
+    document.getElementById('msg').style.display='block';
+    document.getElementById('music').play();
+    for(let i=0;i<40;i++) createHeart();
+}
+
+function createHeart(){
+    let h=document.createElement('div');
+    h.classList.add('heart');
+    h.innerHTML='❤️';
+    h.style.left=Math.random()*100+'vw';
+    h.style.fontSize=(Math.random()*20+10)+'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+}
+</script></body>
+</html>
